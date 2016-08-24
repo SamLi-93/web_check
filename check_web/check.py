@@ -51,10 +51,10 @@ if __name__ == '__main__':
         to_addr = '342447974@qq.com'
         smtp_server = 'smtp.163.com'
 
-        msg = MIMEText('hello, send by Python...', 'plain', 'utf-8')
-        msg['From'] = _format_addr(u'Python爱好者 <%s>' % from_addr)
+        msg = MIMEText('site might be changed, check them immediately', 'plain', 'utf-8')
+        msg['From'] = _format_addr(u'Sam的自动爬虫 <%s>' % from_addr)
         msg['To'] = _format_addr(u'管理员 <%s>' % to_addr)
-        msg['Subject'] = Header(u'来自SMTP的问候……', 'utf-8').encode()
+        msg['Subject'] = Header(u'网站被篡改warning', 'utf-8').encode()
 
         server = smtplib.SMTP(smtp_server, 25)
         server.set_debuglevel(1)
