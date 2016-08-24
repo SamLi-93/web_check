@@ -3,7 +3,7 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.selector import Selector
 
 from check_web.items import CheckWebItem
-
+from scrapy.http.request import Request
 
 class CheckSprider(CrawlSpider):
     name = "check_web_sprider"
@@ -14,12 +14,16 @@ class CheckSprider(CrawlSpider):
 
     start_urls = [
         'http://www.jobgroup.cn/index',
+    ]
+
+    task_urls = [
+        'http://www.jobgroup.cn/index',
         'http://edunew.jobgroup.cn/admin/login',
-        'http://www.nbsafety.org.cn/',
+        # 'http://www.nbsafety.org.cn/',
         'http://www.nitjn.com/',
         'http://www.birdclass.com/index',
         'http://www.cnsiyb.com/',
-        'http://www.mynep.com/index',
+        # 'http://www.mynep.com/index',
         'http://nb.zjcec.com/index',
         'http://www.zjcec.com/index',
         'http://www.ttxs110.com/index',
@@ -43,7 +47,6 @@ class CheckSprider(CrawlSpider):
         'http://lszjy.cjnep.net/lmsv1/admin/login',
         'http://lsu.cjnep.net/lmsv1/admin/login',
         'http://hunaneu.cjnep.net/lmsv1/admin/login',
-
     ]
 
     rules = (
@@ -60,6 +63,14 @@ class CheckSprider(CrawlSpider):
         item = CheckWebItem()
 
         item['body'] = [n.encode('utf-8') for n in body]
+        items = []
 
-        yield item
+        items.append(item)
+        # yield item
         print body
+
+        self.task_urls.remove(response.url)
+        if self.task_urls:
+            r = Request(url=self.task_urls[0], callback=self.parse)
+            items.append(r)
+        return items

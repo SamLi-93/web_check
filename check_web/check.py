@@ -6,6 +6,9 @@ from email.mime.text import MIMEText
 from email.utils import parseaddr, formataddr
 import smtplib
 import hashlib
+import os
+import time
+
 
 
 def getHash(f):
@@ -24,10 +27,18 @@ def IsHashEqual(f1, f2):
 
 
 if __name__ == '__main__':
+    # os.system('cd check_web')
+    os.system('scrapy crawl check_web_sprider')
+    print '0s'
+    time.sleep(10)
+    print '10s'
     f1 = open("./test.json", "rb")
     f2 = open("./test1.json", "rb")
+    print 'testttttweffwfwfwafwfffewttt'
 
     if (IsHashEqual(f1, f2) is False):
+        print IsHashEqual(f1, f2)
+        print 'cuocuocuocucoucou cuocuocuocuo cuo'
         def _format_addr(s):
             name, addr = parseaddr(s)
             return formataddr(( \
